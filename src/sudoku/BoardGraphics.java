@@ -84,7 +84,7 @@ public class BoardGraphics {
 			for(int i = 0; i < 9; i++) {
 				for(int j = 0; j < 9; j++) {
 					try {
-						s.add(i, j, Integer.parseInt(fields[i][j].getText()));
+						s.add(j, i, Integer.parseInt(fields[i][j].getText()));
 					}
 					catch (NumberFormatException e) {
 						s.add(i, j, 0);
@@ -95,7 +95,18 @@ public class BoardGraphics {
 	 			JOptionPane.showMessageDialog(null, "Du har skrivit in ett bräde som inte fungerar");
 			}
 			else {
-				s.solve();
+				print("Start");
+				boolean solutionFound = s.solve();
+				print("Done!");
+				if (solutionFound) {
+					int[][] solvedMatrix = s.getMatrix();
+					
+					for (int j = 0; j < 9; j++) {
+						for (int i = 0; i < 9; i++) {
+							fields[j][i].setText(Integer.toString(solvedMatrix[i][j]));
+						}
+					}
+				}
 			}
 		});
 		
