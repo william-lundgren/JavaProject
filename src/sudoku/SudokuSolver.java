@@ -2,7 +2,7 @@ package sudoku;
 
 public interface SudokuSolver {
 	/**
-	 * To be done
+	 * @return true if the board can be solved else false.
 	 */
 	boolean solve();
 
@@ -18,22 +18,35 @@ public interface SudokuSolver {
 	void add(int row, int col, int digit);
 
 	/**
-	 * To be done
+	 * Removes digit in the box row, col.
+	 * 
+	 * @param row   The row
+	 * @param col   The column
+	 * @throws IllegalArgumentException if row, col or digit is outside the range
+	 *                                  [0..9]
 	 */
 	void remove(int row, int col);
 
 	/**
-	 * To be done
+	 * Get the digit in the box row, col.
+	 * 
+	 * @param row   The row
+	 * @param col   The column
+	 * @throws IllegalArgumentException if row, col or digit is outside the range
+	 *                                  [0..9]
+	 * @return the digit at box row, col.
 	 */
 	int get(int row, int col);
 
 	/**
 	 * Checks that all filled in digits follows the the sudoku rules.
+	 * 
+	 * @return true if the grid is valid else false
 	 */
 	boolean isValid();
 
 	/**
-	 * To be done
+	 * Clears the matrix for the board and sets all values to 0.
 	 */
 	void clear();
 
@@ -47,7 +60,9 @@ public interface SudokuSolver {
 	void setMatrix(int[][] m);
 
 	/**
-	 * To be done
+	 * Gets the matrix representing the board.
+	 * 
+	 * @return 2D array for the matrix
 	 */
 	int[][] getMatrix();
 }
