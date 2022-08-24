@@ -71,36 +71,28 @@ public class Solver implements SudokuSolver {
 		return false;
 	}
 	
-	private boolean squareContainsDuplicates(int row, int column) {
+	private boolean squareContainsDuplicates(int squareRow, int squareColumn) {
 		int[] numberCount = new int[10];
-		int r0 = (row / 3) * 3;
-		int c0 = (column / 3) * 3;
 		
 		for (int r = 0; r < 3; r++) {
 			for (int c = 0; c < 3; c++) {
-				if (++numberCount[field[r0 + r][c0 + c]] == 2 && field[r0 + r][c0 + c] != 0) {
-					return false;
+				if (++numberCount[field[squareRow * 3 + r][squareColumn *  3 + c]] == 2 && field[squareRow * 3 + r][squareColumn*  3 + c] != 0) {
+					
+					return true;
 				}
 			}
 		}
 		
-		return true;
+		return false;
 	}
 	
 	@Override
-	public boolean isValid() {
-		
-		for (int c = 0; c < 9; c++) {
-			if(columnContainsDuplicates(c)) {
+	public boolean isValid() {	
+		for(int i = 0; i < 9; i++) {
+			if(squareContainsDuplicates(i / 3, i % 3) || rowContainsDuplicates(i) || columnContainsDuplicates(i)  ) {
 				return false;
 			}
 		}
-		for(int r = 0; r < 9; r++) {
-			if(rowContainsDuplicates(r)) {
-				return false;
-			}
-		}
-		for (int r = 0)
 		return true;
 	}
 

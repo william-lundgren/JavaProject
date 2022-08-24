@@ -49,7 +49,7 @@ public class BoardGraphics {
 		
 		for(int r = 0; r < 9; r++) {
 			for(int c = 0; c < 9; c++) {
-				//TODO limit to one character
+				
 				JTextField text = new JTextField(1);
 				fields[r][c] = text;
 				text.setFont(new Font("Serif",Font.PLAIN,  50));
@@ -59,7 +59,7 @@ public class BoardGraphics {
 			         @Override
 			         public void keyTyped(KeyEvent e) {
 			        	 char c = e.getKeyChar();
-							if (Character.isDigit(c)) {
+							if (Character.isDigit(c) && Character.getNumericValue(c) > 0) {
 								text.setText(Character.toString(c));
 							}
 							
@@ -131,55 +131,6 @@ public class BoardGraphics {
 
 		frame.setSize(width, height);
 		frame.setVisible(true);
-		
-		//group.add(alphabetic);
-//				group.add(freq);
-//				
-//				JTextField textBox = new JTextField(30);
-//		
-//				
-//				alphabetic.addActionListener(event -> {
-//					model.sort((n1, n2) -> n1.getKey().compareTo(n2.getKey()));
-//				});
-//				
-//				freq.addActionListener(event -> {
-//					model.sort((n1, n2) -> n2.getValue() - n1.getValue());
-//				});
-//				
-//				search.addActionListener(event -> {
-//				 	String text = textBox.getText();
-//				 	for(int i = 0; i < model.getSize(); i++) {
-//				 		if(model.getElementAt(i).getKey().equalsIgnoreCase(text)) {
-//				 			list.setSelectedIndex(i);
-//				 			list.ensureIndexIsVisible(i);
-//				 			break;
-//				 		}
-//				 		if(i == model.getSize() - 1) {
-//				 			JOptionPane.showMessageDialog(null, "Den finns inte");
-//				 		}
-//				 	}
-//				});
-//				
-//				textBox.addActionListener(event ->{
-//					String text = textBox.getText();
-//				 	for(int i = 0; i < model.getSize(); i++) {
-//				 		if(model.getElementAt(i).getKey().equalsIgnoreCase(text)) {
-//				 			list.setSelectedIndex(i);
-//				 			list.ensureIndexIsVisible(i);
-//				 			break;
-//				 		}
-//				 		if(i == model.getSize() - 1) {
-//				 			JOptionPane.showMessageDialog(null, "Den finns inte");
-//				 		}
-//				 	}
-//				});
-			
-//				panel.add(alphabetic);
-//				panel.add(freq);
-//				panel.add(textBox);
-//				panel.add(search);
-//
-//				pane.add(panel, BorderLayout.SOUTH);
 	}
 	public static void print(Object message) {
 		System.out.println(message);
