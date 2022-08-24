@@ -7,6 +7,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.Map;
 
 import javax.print.attribute.AttributeSet;
@@ -45,21 +47,33 @@ public class BoardGraphics {
 		
 		Solver s = new Solver();
 		
-		for(int i = 0; i < 9; i++) {
-			for(int j = 0; j < 9; j++) {
+		for(int r = 0; r < 9; r++) {
+			for(int c = 0; c < 9; c++) {
 				//TODO limit to one character
 				JTextField text = new JTextField(1);
-				fields[i][j] = text;
+				fields[r][c] = text;
 				text.setFont(new Font("Serif",Font.PLAIN,  50));
 				text.setHorizontalAlignment(JTextField.CENTER);
 				
+				text.addKeyListener(new KeyAdapter() {
+			         @Override
+			         public void keyTyped(KeyEvent e) {
+			        	 char c = e.getKeyChar();
+							if (Character.isDigit(c)) {
+								text.setText(Character.toString(c));
+							}
+							
+							e.consume();
+			         }
+			      });
+				
 				// Corner 3x3's
-				if((i < 3 || i > 5) && (j < 3 || j > 5)) {
+				if((r < 3 || r > 5) && (c < 3 || c > 5)) {
 					text.setBackground(Color.orange);
 				}
 				
 				// Middle 3x3
-				else if(i < 6 && i > 2 && j < 6 && j > 2 ) {
+				else if(r < 6 && r > 2 && c < 6 && c > 2 ) {
 					text.setBackground(Color.orange);
 				}
 				gridPanel.add(text);
@@ -73,40 +87,39 @@ public class BoardGraphics {
 		
 		clear.addActionListener(event -> {
 			s.clear();
-			for(int i = 0; i < 9; i++) {
-				for(int j = 0; j < 9; j++) {
-					fields[i][j].setText("");
+			for(int r = 0; r < 9; r++) {
+				for(int c = 0; c < 9; c++) {
+					fields[r][c].setText("");
 				}
 			}
 		});
 		
 		solve.addActionListener(event -> {
-			for(int i = 0; i < 9; i++) {
-				for(int j = 0; j < 9; j++) {
+			for(int r = 0; r < 9; r++) {
+				for(int c = 0; c < 9; c++) {
 					try {
-						s.add(j, i, Integer.parseInt(fields[i][j].getText()));
+						s.add(r, c, Integer.parseInt(fields[r][c].getText()));
 					}
 					catch (NumberFormatException e) {
-						s.add(i, j, 0);
+						s.add(r, c, 0);
 					}
 				}
 			}
-			if(!s.isValid()) {
-	 			JOptionPane.showMessageDialog(null, "Du har skrivit in ett bräde som inte fungerar");
+			
+			print("Start");
+			boolean solutionFound = s.solve();
+			print("Done!");
+			if (solutionFound) {
+				int[][] solvedMatrix = s.getMatrix();
+				
+				for (int r = 0; r < 9; r++) {
+					for (int c = 0; c < 9; c++) {
+						fields[r][c].setText(Integer.toString(solvedMatrix[r][c]));
+					}
+				}
 			}
 			else {
-				print("Start");
-				boolean solutionFound = s.solve();
-				print("Done!");
-				if (solutionFound) {
-					int[][] solvedMatrix = s.getMatrix();
-					
-					for (int j = 0; j < 9; j++) {
-						for (int i = 0; i < 9; i++) {
-							fields[j][i].setText(Integer.toString(solvedMatrix[i][j]));
-						}
-					}
-				}
+				JOptionPane.showMessageDialog(null, "Ingen lösning funnen.");
 			}
 		});
 		

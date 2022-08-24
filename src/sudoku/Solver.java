@@ -73,13 +73,13 @@ public class Solver implements SudokuSolver {
 	
 	@Override
 	public boolean isValid() {
-		for (int j = 0; j < 9; j++) {
-			if(columnContainsDuplicates(j)) {
+		for (int c = 0; c < 9; c++) {
+			if(columnContainsDuplicates(c)) {
 				return false;
 			}
 		}
-		for(int i = 0; i < 9; i++) {
-			if(rowContainsDuplicates(i)) {
+		for(int r = 0; r < 9; r++) {
+			if(rowContainsDuplicates(r)) {
 				return false;
 			}
 		}
@@ -93,9 +93,9 @@ public class Solver implements SudokuSolver {
 
 	@Override
 	public void setMatrix(int[][] m) {
-		for(int i = 0; i < m.length; i++) {
-			for(int j = 0; j < m[i].length; j++) {
-				field[i][j] = m[i][j];
+		for(int r = 0; r < m.length; r++) {
+			for(int c = 0; c < m[r].length; c++) {
+				field[r][c] = m[r][c];
 			}
 		}
 	}
